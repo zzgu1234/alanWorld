@@ -7,7 +7,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://alan-db.copptkzflkpr.ap-northeast-2.rds.amazonaws.com:5432/alan_db?currentSchema
+    url: jdbc:postgresql://alan-db.copptkzflkpr.ap-northeast-2.rds.amazonaws.com:5432/alan_db?currentSchema=bokduck
     username: alan
     password: CJpWV2FZaO
     driver-class-name: org.postgresql.Driver

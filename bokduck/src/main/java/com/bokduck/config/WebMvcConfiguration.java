@@ -11,7 +11,7 @@ import com.bokduck.interceptor.AuthInterceptor;
 public class WebMvcConfiguration implements WebMvcConfigurer{
 
 	@Autowired
-	private AuthInterceptor interceptor;
+	AuthInterceptor interceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -21,7 +21,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 
 		.addPathPatterns("/api/**")
 
-		//로그인과 swagger 경로는 제외한다.
+		//회원가입 / 로그인 / swagger 경로는 제외한다.
+		.excludePathPatterns("/api/regist")
 		.excludePathPatterns("/api/login")
 		.excludePathPatterns("/swagger-ui/**");
 

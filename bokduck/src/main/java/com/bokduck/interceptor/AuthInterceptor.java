@@ -14,7 +14,7 @@ import com.bokduck.component.JwtManager;
 public class AuthInterceptor implements HandlerInterceptor {
 
 	@Autowired
-	private JwtManager jwt;
+	JwtManager jwt;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,

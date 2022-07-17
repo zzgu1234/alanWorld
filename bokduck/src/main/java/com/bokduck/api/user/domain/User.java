@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table( schema = "bokduck", name = "user")
 public class User {
 
 	/*
@@ -42,10 +40,10 @@ public class User {
 
 
 	/*
-	 * 사용자 암호(BCrypt)
+	 * 사용자 암호
 	 */
 	@Column(name = "password", nullable = false)
-	private BCrypt password;
+	private String password;
 
 
 	/*
@@ -64,12 +62,14 @@ public class User {
 	public User(@NotNull Long userNo,
 			@NotNull String id,
 			@NotNull String name,
+			@NotNull String password,
 			@NotNull String email
 			,@NotNull String mobile) {
 
 		this.userNo = userNo;
 		this.id = id;
 		this.name = name;
+		this.password = password;
 		this.email = email;
 		this.mobile = mobile;
 	}

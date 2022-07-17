@@ -6,14 +6,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Schema(description = "회원가입 후 응답")
+@Schema(description = "로그인 후 응답")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCreateResponse {
+public class UserLoginResponse {
 
 	@Schema(description = "사용자 아이디")
 	private String id;
+
+	@Schema(description = "jwt token")
+	private String token;
 
 }

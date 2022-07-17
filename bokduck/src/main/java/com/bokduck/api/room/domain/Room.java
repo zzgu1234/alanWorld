@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "room")
+@Table(schema = "bokduck", name = "room")
 public class Room {
 
 	/*

@@ -10,6 +10,8 @@ import com.bokduck.api.user.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	Optional<User> findById(Long userNo);
+	Optional<User> findById(String id);
+
+	Optional<User> findByIdAndPassword(String id, String password);
 
 }

@@ -16,9 +16,9 @@ import com.bokduck.config.BokduckApplication;
 public class RoomControllerTest {
 
 //	@Autowired
-//	private MockMvc mockMvc;
+//	MockMvc mockMvc;
 //	@Autowired
-//	private ObjectMapper objectMapper;
+//	ObjectMapper objectMapper;
 
 	private static HttpHeaders authHeaders;
 	private static HttpHeaders adminHeaders;
