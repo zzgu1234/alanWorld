@@ -1,4 +1,4 @@
-package com.bokduck.room.value;
+package com.bokduck.api.room.value;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,8 @@ public enum RoomType {
 	TW("투룸"),
 	TH("쓰리룸");
 
-	RoomType(String description) {}
+	RoomType(String description) {
+
+	}
 
 }

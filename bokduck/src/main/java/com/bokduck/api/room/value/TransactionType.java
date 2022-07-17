@@ -1,4 +1,4 @@
-package com.bokduck.room.value;
+package com.bokduck.api.room.value;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

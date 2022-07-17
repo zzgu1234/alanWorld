@@ -4,8 +4,12 @@ import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.security.SecurityScheme.Type;
 
 @Configuration
 public class OpenApiConfig {
@@ -25,24 +29,24 @@ public class OpenApiConfig {
 				.title("Bokduck API Documentation")
 				.description("부동산 중개플랫폼");
 
-//		SecurityScheme webAuth =
-//				new SecurityScheme()
-//				.name("JWT Token")
-//	            .description("for Web Application API")
-//	            .type(Type.HTTP)
-//	            .scheme("bearer")
-//	            .bearerFormat("JWT");
-	    
-//	    SecurityRequirement securityRequirement =
-//	            new SecurityRequirement()
-//	                .addList("webAuth");
-	    
+		SecurityScheme webAuth =
+				new SecurityScheme()
+				.name("JWT Token")
+	            .description("for Web Application API")
+	            .type(Type.HTTP)
+	            .scheme("bearer")
+	            .bearerFormat("JWT");
+
+	    SecurityRequirement securityRequirement =
+	            new SecurityRequirement()
+	                .addList("webAuth");
+
 	    return new OpenAPI()
-//	    		.components(
-//	    	            new Components()
-//	    	                .addSecuritySchemes("webAuth", webAuth)
-//	    	        )
-//	    	    .addSecurityItem(securityRequirement)
+	    		.components(
+	    	            new Components()
+	    	                .addSecuritySchemes("webAuth", webAuth)
+	    	        )
+	    	    .addSecurityItem(securityRequirement)
 				.info(info);
 
 	}

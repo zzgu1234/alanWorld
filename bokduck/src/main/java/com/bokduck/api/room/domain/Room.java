@@ -1,4 +1,4 @@
-package com.bokduck.room.domain;
+package com.bokduck.api.room.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.bokduck.room.value.RoomType;
-import com.bokduck.room.value.TransactionType;
+import com.bokduck.api.room.value.RoomType;
+import com.bokduck.api.room.value.TransactionType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
