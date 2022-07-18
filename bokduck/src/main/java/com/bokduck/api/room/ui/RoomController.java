@@ -1,7 +1,5 @@
 package com.bokduck.api.room.ui;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +34,7 @@ public class RoomController {
 	      @ApiResponse(responseCode = "401", description = "검색조건 오류", content = @Content),
 	  })
 	@GetMapping("/rooms")
-	public String findAll(HttpServletRequest request) throws Exception{
+	public String findAll() throws Exception{
 
 		return "!";
 	}

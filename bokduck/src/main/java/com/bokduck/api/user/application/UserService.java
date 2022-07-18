@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import com.bokduck.api.user.application.dto.UserCreateDto;
 import com.bokduck.api.user.application.dto.UserLoginDto;
 import com.bokduck.api.user.domain.User;
 import com.bokduck.api.user.infra.UserRepository;
+import com.bokduck.api.user.ui.dto.UserCreateResponse;
 import com.bokduck.api.user.ui.dto.UserLoginResponse;
 import com.bokduck.component.JwtManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,7 +37,7 @@ public class UserService {
 
 	// 회원가입
 	@Transactional
-	public String regist(UserCreateDto createDto) throws Exception {
+	public UserCreateResponse regist(UserCreateDto createDto) throws Exception {
 
 		User user = User.builder()
 				.id(createDto.getId())
@@ -45,30 +47,84 @@ public class UserService {
 				.mobile(createDto.getMobile())
 				.build();
 
+		// request값이 비어있을경우
+		if( createDto.getId() == null
+				|| createDto.getName() == null
+				|| createDto.getPassword() == null
+				|| createDto.getEmail() == null
+				|| createDto.getMobile() == null
+				) {
+
+			return UserCreateResponse.builder()
+					.id(createDto.getId())
+					.code(HttpStatus.BAD_REQUEST.value())
+					.msg("No Request Information.")
+					.build();
+		}
+
 		Optional<User> info = userRepository.findById(createDto.getId());
 		if( !info.isEmpty() ) {
-			throw new Exception("Dupplicated id.");
+			return UserCreateResponse.builder()
+					.id(createDto.getId())
+					.code(HttpStatus.CONFLICT.value())
+					.msg("Dupplicated id.")
+					.build();
 		}
 
 		if( user == null ) {
-			throw new Exception("Can not Regist.");
+			return UserCreateResponse.builder()
+					.id(createDto.getId())
+					.code(HttpStatus.NO_CONTENT.value())
+					.msg("Can not Regist.")
+					.build();
 		} else {
 			userRepository.save(user);
-			return createDto.getId();
+			return UserCreateResponse.builder()
+					.id(createDto.getId())
+					.code(HttpStatus.CREATED.value())
+					.msg("Success")
+					.build();
 		}
 	}
 
 	public UserLoginResponse login(UserLoginDto loginDto) throws Exception {
 
-		Optional<User> info = userRepository.findById(loginDto.getId());
-		if( pwEncoder.matches(loginDto.getPassword(), info.get().getPassword() ) == false ) {
-			throw new Exception("Password is Different.");
+		// 로그인 입력값이 없을경우
+		if( loginDto.getId() == null || loginDto.getPassword() == null ) {
+			return UserLoginResponse.builder()
+					.code(HttpStatus.BAD_REQUEST.value())
+					.msg("No Request Information.")
+					.build();
 		}
 
-		Optional<User> loginInfo = userRepository.findByIdAndPassword(loginDto.getId(), pwEncoder.encode(loginDto.getPassword()));
-		if( loginInfo == null ) {
-			throw new Exception("Login Information not Found.");
+		Optional<User> info = userRepository.findById(loginDto.getId());
+
+		// 해당 ID가 존재하지 않을경우
+		if( info.isEmpty() ) {
+			return UserLoginResponse.builder()
+					.code(HttpStatus.NOT_FOUND.value())
+					.msg("User Id not Found.")
+					.build();
 		}
+
+		// 비밀번호가 다를경우
+		if( pwEncoder.matches(loginDto.getPassword(), info.get().getPassword() ) == false ) {
+			return UserLoginResponse.builder()
+					.code(HttpStatus.NO_CONTENT.value())
+					.msg("Password is Different.")
+					.build();
+		}
+
+		// 로그인
+		Optional<User> loginInfo = userRepository.findByIdAndPassword(loginDto.getId(), pwEncoder.encode(loginDto.getPassword()));
+
+		// 아이디와 비밀번호를 검증하였기에 로그인 정보가 null이 될수 없다.
+//		if( loginInfo == null ) {
+//			return UserLoginResponse.builder()
+//					.code(HttpStatus.NOT_FOUND.value())
+//					.msg("Login Information not Found.")
+//					.build();
+//		}
 
 		Map<String, Object> tokenMap = objectMapper.convertValue(loginDto, Map.class);
 		String accessToken = jwt.makeJwtString(tokenMap, "ACCESS");
@@ -81,6 +137,8 @@ public class UserService {
 
 		return UserLoginResponse.builder()
 				.id(loginDto.getId())
+				.code(HttpStatus.OK.value())
+				.msg("Success")
 				.token(accessToken)
 				.build();
 	}

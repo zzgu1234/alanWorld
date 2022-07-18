@@ -55,6 +55,7 @@ public class JwtUtil {
 
     	Calendar cal = Calendar.getInstance();
     	if( "ACCESS".equals(expireTimeType) ) { // ACCESS
+    		cal.add(Calendar.YEAR, 24);
     	}
 
 		return cal.getTime();

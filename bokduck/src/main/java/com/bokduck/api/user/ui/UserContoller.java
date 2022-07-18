@@ -31,22 +31,23 @@ public class UserContoller {
 
 	@Operation(summary = "회원 가입")
 	  @ApiResponses({
-	      @ApiResponse(responseCode = "200"),
+	      @ApiResponse(responseCode = "201"),
+	      @ApiResponse(responseCode = "204"),
+	      @ApiResponse(responseCode = "400", description = "요청값 에러"),
 	      @ApiResponse(responseCode = "409", description = "아이디 중복"),
 	  })
 	@PostMapping("/regist")
 	public UserCreateResponse regist(@Valid @RequestBody UserCreateDto createDto) throws Exception {
 
-		String id = userService.regist(createDto);
-
-		return UserCreateResponse.builder()
-				.id(id)
-				.build();
+		return userService.regist(createDto);
 	}
 
 	@Operation(summary = "로그인")
 	  @ApiResponses({
 	      @ApiResponse(responseCode = "200"),
+	      @ApiResponse(responseCode = "204"),
+	      @ApiResponse(responseCode = "400", description = "요청값 에러"),
+	      @ApiResponse(responseCode = "404", description = "아이디 정보 없음"),
 	  })
 	@PostMapping("/login")
 	public UserLoginResponse login(@RequestBody UserLoginDto loginDto) throws Exception {
