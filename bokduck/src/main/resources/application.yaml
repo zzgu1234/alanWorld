@@ -22,3 +22,9 @@ logging:
               BasicBinder: TRACE
 springdoc:
   packages-to-scan: com.bokduck
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/**.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.bokduck.api.**.infra

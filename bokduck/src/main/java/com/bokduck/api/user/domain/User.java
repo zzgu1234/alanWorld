@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	/*
-	 * 사용자 고유번호
+	 * 사용자 번호
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

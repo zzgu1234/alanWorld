@@ -9,9 +9,9 @@ import lombok.ToString;
 @ToString
 @Getter
 @RequiredArgsConstructor
-public enum TransactionType implements CodeType {
+public enum PriceType implements CodeType {
 
-	C("전세"),
+	D("보증금"),
 	M("월세");
 
 	private final String description;

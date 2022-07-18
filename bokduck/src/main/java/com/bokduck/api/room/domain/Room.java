@@ -2,14 +2,17 @@ package com.bokduck.api.room.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.bokduck.api.room.value.RoomType;
-import com.bokduck.api.room.value.TransactionType;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Room {
 
 	/*
-	 * 번호
+	 * 방 번호
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,29 +31,48 @@ public class Room {
 	private Long roomNo;
 
 	/*
+	 * 방 제목
+	 */
+	@Column(name = "ROOM_TITLE", nullable = false)
+	private String roomTitle;
+
+	/*
+	 * 방 위치
+	 */
+	@Column(name = "ROOM_LOCATION", nullable = false)
+	private String roomLocation;
+
+	/*
 	 * 방 유형
 	 */
 	@Column(name = "ROOM_TYPE", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private RoomType roomType;
 
 	/*
-	 * 거래 유형
+	 * 방 등록한 사용자 아이디
 	 */
-	@Column(name = "TRANSACTION_TYPE", nullable = false)
-	private TransactionType transactionType;
+	@Column(name = "id", nullable = false)
+	private String id;
 
+//	/*
+//	 * 카테고리 번호
+//	 */
+//	@Column(name = "CATEGORY_NO", nullable = false)
+//	private Long categoryNo;
 
-	/*
-	 * 보증금
-	 */
-	@Column(name = "DEPOSIT_PRICE", nullable = false)
-	private Long depositPrice;
+	@Builder
+	public Room(@NotNull Long roomNo,
+			@NotNull String roomTitle,
+			@NotNull String roomLocation,
+			@NotNull RoomType roomType,
+			@NotNull String id) {
 
-
-	/*
-	 * 보증금
-	 */
-	@Column(name = "MONTHLY_PRICE", nullable = false)
-	private Long monthlyPrice;
+		this.roomNo = roomNo;
+		this.roomTitle = roomTitle;
+		this.roomLocation = roomLocation;
+		this.roomType = roomType;
+		this.id = id;
+	}
 
 }

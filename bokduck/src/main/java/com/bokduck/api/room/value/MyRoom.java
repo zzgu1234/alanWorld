@@ -9,10 +9,10 @@ import lombok.ToString;
 @ToString
 @Getter
 @RequiredArgsConstructor
-public enum TransactionType implements CodeType {
+public enum MyRoom implements CodeType {
 
-	C("전세"),
-	M("월세");
+	Y("내글보기"),
+	N("");
 
 	private final String description;
 

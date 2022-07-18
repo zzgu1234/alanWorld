@@ -31,7 +31,6 @@ public class UserService {
 	@Autowired
 	JwtManager jwt;
 
-
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder pwEncoder;
 
@@ -39,6 +38,7 @@ public class UserService {
 	@Transactional
 	public UserCreateResponse regist(UserCreateDto createDto) throws Exception {
 
+		//암호화를 위한 설정
 		User user = User.builder()
 				.id(createDto.getId())
 				.name(createDto.getName())

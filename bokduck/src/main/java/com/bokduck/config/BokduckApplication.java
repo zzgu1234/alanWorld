@@ -1,5 +1,6 @@
 package com.bokduck.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.bokduck")
 @EnableJpaRepositories(basePackages = "com.bokduck.api")
 @EntityScan(basePackages = "com.bokduck.api")
+@MapperScan(basePackages = "com.bokduck.api")
 public class BokduckApplication {
 
 	public static void main(String[] args) {
