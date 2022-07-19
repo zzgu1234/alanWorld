@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.bokduck.api.room.application.dto.RoomUpdateDto;
 import com.bokduck.api.room.value.RoomType;
+import com.bokduck.api.room.value.UseYn;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +57,13 @@ public class Room {
 	@Column(name = "id", nullable = false)
 	private String id;
 
+	/*
+	 * 방 삭제 여부
+	 */
+	@Column(name = "use_yn", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private UseYn useYn;
+
 //	/*
 //	 * 카테고리 번호
 //	 */
@@ -66,13 +75,27 @@ public class Room {
 			@NotNull String roomTitle,
 			@NotNull String roomLocation,
 			@NotNull RoomType roomType,
-			@NotNull String id) {
+			@NotNull String id,
+			@NotNull UseYn useYn) {
 
 		this.roomNo = roomNo;
 		this.roomTitle = roomTitle;
 		this.roomLocation = roomLocation;
 		this.roomType = roomType;
 		this.id = id;
+		this.useYn = useYn;
+	}
+
+
+	public void delete(Long roomNo){
+		this.useYn = UseYn.N;
+	}
+
+
+	public void update(RoomUpdateDto editDto) {
+		this.roomTitle = editDto.getRoomTitle();
+		this.roomLocation = editDto.getRoomLocation();
+		this.roomType = editDto.getRoomType();
 	}
 
 }

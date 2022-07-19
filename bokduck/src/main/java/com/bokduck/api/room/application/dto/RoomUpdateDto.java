@@ -1,20 +1,23 @@
 package com.bokduck.api.room.application.dto;
 
+import com.bokduck.api.room.domain.Room;
 import com.bokduck.api.room.value.RoomType;
-import com.bokduck.api.room.value.UseYn;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@Schema(description = "방 등록")
+@Schema(description = "방 수정")
 @Getter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class RoomCreateDto {
+public class RoomUpdateDto {
+
+	@Schema(description = "방 번호")
+	private Long roomNo;
 
 	@Schema(description = "방 제목")
 	private String roomTitle;
@@ -25,7 +28,12 @@ public class RoomCreateDto {
 	@Schema(description = "방 유형")
 	private RoomType roomType;
 
-	@Schema(description = "방 삭제 여부")
-	private UseYn useYn;
+	public static RoomUpdateDto of(Room room) {
+		return RoomUpdateDto.builder()
+				.roomTitle(room.getRoomTitle())
+				.roomLocation(room.getRoomLocation())
+				.roomType(room.getRoomType())
+				.build();
+	}
 
 }

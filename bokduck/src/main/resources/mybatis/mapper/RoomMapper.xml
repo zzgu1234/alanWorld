@@ -9,7 +9,7 @@
 		  FROM	ROOM A
 	 LEFT JOIN	ROOMCATEGORY B
 	 		ON	A.room_no = B.room_no
-	 <where>
+	 	 WHERE	A.useYN = 'Y'
 	 	<if test='id != null and !"".equals(id)'>
 			AND	A.id = #{id}
 	 	</if>
@@ -25,7 +25,6 @@
 	 	<if test='"M".equals(priceType) and min != null and max != null'>
 			AND	B.monthly_price >= #{min} AND B.monthly_price <![CDATA[ <= ]]> #{max}
 	 	</if>
-	 </where>
 
 	</select>
 
@@ -37,7 +36,7 @@
 	 LEFT JOIN	ROOMCATEGORY B
 	 		ON	A.room_no = B.room_no
 	 	 WHERE	A.room_no = #{roomNo}
-
+		   AND	A.useYN = 'Y'
 	</select>
 
 </mapper>

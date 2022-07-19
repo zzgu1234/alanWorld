@@ -19,6 +19,7 @@ import com.bokduck.api.room.application.RoomService;
 import com.bokduck.api.room.application.dto.RoomCreateDto;
 import com.bokduck.api.room.application.dto.RoomDto;
 import com.bokduck.api.room.application.dto.RoomListRequest;
+import com.bokduck.api.room.application.dto.RoomUpdateDto;
 import com.bokduck.api.room.ui.dto.RoomCreateResponse;
 import com.bokduck.common.PageResult;
 import com.bokduck.component.JwtManager;
@@ -102,12 +103,13 @@ public class RoomController {
 	@Operation(summary = "방 수정")
 	  @ApiResponses({
 	      @ApiResponse(responseCode = "200"),
+	      @ApiResponse(responseCode = "403", description = "수정 권한 없음"),
 	      @ApiResponse(responseCode = "404", description = "수정하려는 방 없음"),
 	  })
 	@PatchMapping("/room")
-	public void edit() throws Exception{
+	public void edit(@Valid @RequestBody RoomUpdateDto editDto) throws Exception{
 
-
+		roomService.update(editDto);
 	}
 
 	@Operation(summary = "방 삭제")
@@ -115,10 +117,10 @@ public class RoomController {
 	      @ApiResponse(responseCode = "200"),
 	      @ApiResponse(responseCode = "404", description = "삭제하려는 방 없음"),
 	  })
-	@DeleteMapping("/room")
-	public void delete() throws Exception{
+	@DeleteMapping("/room/{roomNo}")
+	public void delete(@PathVariable Long roomNo) throws Exception{
 
-
+		roomService.delete(roomNo);
 	}
 
 }

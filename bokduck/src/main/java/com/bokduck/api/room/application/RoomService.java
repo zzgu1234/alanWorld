@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bokduck.api.room.application.dto.RoomCreateDto;
 import com.bokduck.api.room.application.dto.RoomDto;
 import com.bokduck.api.room.application.dto.RoomListRequest;
+import com.bokduck.api.room.application.dto.RoomUpdateDto;
 import com.bokduck.api.room.domain.Room;
 import com.bokduck.api.room.infra.RoomMapper;
 import com.bokduck.api.room.infra.RoomRepository;
 import com.bokduck.api.room.infra.dto.RoomListParam;
 import com.bokduck.api.room.ui.dto.RoomCreateResponse;
+import com.bokduck.api.room.value.UseYn;
 import com.bokduck.common.PageResult;
 import com.bokduck.component.JwtManager;
 
@@ -45,6 +48,7 @@ public class RoomService {
 				.roomLocation(createDto.getRoomLocation())
 				.roomType(createDto.getRoomType())
 				.id(id)
+				.useYn(UseYn.Y)
 				.build();
 
 		// request값이 비어있을경우
@@ -101,11 +105,41 @@ public class RoomService {
 				.orElse(null);
 
 		if( roomInfo == null ) {
-			return Optional.ofNullable(RoomDto.builder()
-					.build());
+			throw new RuntimeException("Room info not found.");
 		}
 
 		return Optional.of(roomInfo);
+	}
+
+	@Transactional
+	public void update(@Valid RoomUpdateDto editDto) throws Exception {
+
+		String id = jwt.getId(request);
+		Room room = roomRepository.findById(editDto.getRoomNo())
+				.orElseThrow(() -> new RuntimeException("Room info not found."));
+
+		if( !id.equals(room.getId()) ) {
+			throw new RuntimeException("Can not update Room.");
+		}
+
+		room.update(editDto);
+		roomRepository.save(room);
+	}
+
+	@Transactional
+	public void delete(Long roomNo) throws Exception {
+
+		String id = jwt.getId(request);
+		Room room = roomRepository.findById(roomNo)
+				.orElseThrow(() -> new RuntimeException("Room info not found."));
+
+		if( !id.equals(room.getId()) ) {
+			throw new RuntimeException("Can not remove Room.");
+		}
+
+		room.delete(roomNo);
+
+		roomRepository.save(room);
 	}
 
 }
