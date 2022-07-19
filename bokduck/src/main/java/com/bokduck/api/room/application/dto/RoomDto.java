@@ -35,7 +35,7 @@ public class RoomDto {
 	 * RoomCategory
 	 */
 
-	@Schema(description = "카테고리 번호")
+	@Schema(description = "방유형 번호")
 	private Long categoryNo;
 
 	@Schema(description = "거래 유형")
@@ -46,7 +46,6 @@ public class RoomDto {
 
 	@Schema(description = "월세")
 	private Long monthlyPrice;
-
 
 	/*
 	 * User

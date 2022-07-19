@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,7 +93,7 @@ public class RoomService {
 				.items(roomMapper.findAll(param)
 					.stream()
 					.map(RoomDto::ofResult)
-					.collect(Collectors.toList()))
+					.collect(Collectors.toList()) )
 				.build();
 	}
 
@@ -112,14 +111,14 @@ public class RoomService {
 	}
 
 	@Transactional
-	public void update(@Valid RoomUpdateDto editDto) throws Exception {
+	public void update(RoomUpdateDto editDto) throws Exception {
 
 		String id = jwt.getId(request);
 		Room room = roomRepository.findById(editDto.getRoomNo())
 				.orElseThrow(() -> new RuntimeException("Room info not found."));
 
 		if( !id.equals(room.getId()) ) {
-			throw new RuntimeException("Can not update Room.");
+			throw new RuntimeException("No permission");
 		}
 
 		room.update(editDto);
@@ -134,7 +133,7 @@ public class RoomService {
 				.orElseThrow(() -> new RuntimeException("Room info not found."));
 
 		if( !id.equals(room.getId()) ) {
-			throw new RuntimeException("Can not remove Room.");
+			throw new RuntimeException("No permission");
 		}
 
 		room.delete(roomNo);

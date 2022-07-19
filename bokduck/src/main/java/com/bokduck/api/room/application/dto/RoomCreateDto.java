@@ -1,7 +1,6 @@
 package com.bokduck.api.room.application.dto;
 
 import com.bokduck.api.room.value.RoomType;
-import com.bokduck.api.room.value.UseYn;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -24,8 +23,5 @@ public class RoomCreateDto {
 
 	@Schema(description = "방 유형")
 	private RoomType roomType;
-
-	@Schema(description = "방 삭제 여부")
-	private UseYn useYn;
 
 }

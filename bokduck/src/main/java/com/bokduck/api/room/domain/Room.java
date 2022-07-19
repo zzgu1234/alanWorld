@@ -65,7 +65,7 @@ public class Room {
 	private UseYn useYn;
 
 //	/*
-//	 * 카테고리 번호
+//	 * 방유형 번호
 //	 */
 //	@Column(name = "CATEGORY_NO", nullable = false)
 //	private Long categoryNo;
@@ -83,19 +83,19 @@ public class Room {
 		this.roomLocation = roomLocation;
 		this.roomType = roomType;
 		this.id = id;
+		if(useYn == null) useYn = UseYn.Y;
 		this.useYn = useYn;
 	}
-
-
-	public void delete(Long roomNo){
-		this.useYn = UseYn.N;
-	}
-
 
 	public void update(RoomUpdateDto editDto) {
 		this.roomTitle = editDto.getRoomTitle();
 		this.roomLocation = editDto.getRoomLocation();
 		this.roomType = editDto.getRoomType();
 	}
+
+	public void delete(Long roomNo){
+		this.useYn = UseYn.N;
+	}
+
 
 }

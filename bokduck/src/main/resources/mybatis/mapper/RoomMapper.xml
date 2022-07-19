@@ -5,11 +5,19 @@
 	<select id="findAll" resultType="com.bokduck.api.room.infra.RoomResult">
 
 		/* findAll */
-		SELECT	A.*, B.*
+		SELECT	A.room_no
+				, A.room_title
+				, A.room_location
+				, A.room_type
+				, A.id
+				, B.category_no
+				, B.transaction_type
+				, B.deposit_price
+				, B.monthly_price
 		  FROM	ROOM A
 	 LEFT JOIN	ROOMCATEGORY B
 	 		ON	A.room_no = B.room_no
-	 	 WHERE	A.useYN = 'Y'
+	 	 WHERE	A.use_yn = 'Y'
 	 	<if test='id != null and !"".equals(id)'>
 			AND	A.id = #{id}
 	 	</if>
@@ -36,7 +44,7 @@
 	 LEFT JOIN	ROOMCATEGORY B
 	 		ON	A.room_no = B.room_no
 	 	 WHERE	A.room_no = #{roomNo}
-		   AND	A.useYN = 'Y'
+		   AND	A.use_yn = 'Y'
 	</select>
 
 </mapper>

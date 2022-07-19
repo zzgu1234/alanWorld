@@ -1,4 +1,4 @@
-package com.bokduck.user;
+package com.bokduck.api.user;
 
 public class UserControllerTest {
 
