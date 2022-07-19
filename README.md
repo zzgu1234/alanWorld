@@ -12,4 +12,5 @@ mockmvc testcode 구현 (RoomController)
 사용자(user),방(Room),방유형(RoomCategory) 도메인으로 구성  
 DDD 구조 적용  
 JPA & Mybatis 혼합구조  
-
+JWT으로 로그인 구현 ( jjwt 0.9.1 )  
+코드변경이 없는 변수는 enum 사용
